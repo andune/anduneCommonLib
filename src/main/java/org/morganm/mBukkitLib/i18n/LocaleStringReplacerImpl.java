@@ -38,8 +38,6 @@ public class LocaleStringReplacerImpl implements Locale {
 	
 	@Override
 	public String getMessage(String key, final Object... args) {
-        key = key.replaceAll(" ", "_");
-
         if (!msgLib.getResourceBundle().containsKey(key)) {
             return "UNKNOWN_LOCALE_" + key;
         }
