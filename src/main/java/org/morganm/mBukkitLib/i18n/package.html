@@ -1,0 +1,90 @@
+<html>
+<head></head>
+<body>
+<p>
+This package is intended to be a generic package to be used by a Bukkit plugin to provide
+localization support. The routines here are heavily borrowed from Hidendra's LWC and refactored
+to be generic in nature such that you should be able to copy these classes into your own
+project and be up and running with robust internationalization (i18n) with low effort.
+
+<p>
+Below is included a usage example to get you started.
+
+<p>
+In your plugin onEnable method, you would instantiate a Locale object like so:
+
+<p>
+<code><xmp>
+  private Locale locale;
+  // ...
+  public void onEnable() {
+	LocaleConfig localeConfig = new LocaleConfig(
+		getConfig().getString("locale", "en"),		// "locale" config option, default "en"
+		this,
+		"lwc",										// whatever prefix makes sense for your plugin
+		getFile(),
+		log, logPrefix);							// can be null if you like
+	locale = LocaleFactory.getLocale(localeConfig);
+  }
+
+  public void sendLocalizedMessage(CommandSender target, String msgKey, Object...args) {
+    target.sendMessage(locale.getMessage(msgKey, args));
+  }
+</xmp></code>
+
+<p>
+Then to use your new locale using the utility method defined above:
+
+<code><xmp>
+  plugin.sendLocalizedMessage(player, "MESSAGE_YOU_DIED", "killer", killer.getName());
+</xmp></code>
+
+<p>  
+This would locate the localized string with the key "MESSAGE_YOU_DIED" and replace any
+occurrence of "%killer%" in that string with the killer's name.
+
+<p>
+Setting up your language files is a matter of including a "lang" directory in your JAR
+file with your language definitions, like so:
+
+<code><xmp>
+> jar tvf LWC.jar 
+     0 Mon Dec 12 03:40:46 PST 2011 lang/
+ 15019 Sun Dec 11 08:21:12 PST 2011 lang/lwc_cz.properties
+ 14719 Sun Dec 11 08:21:12 PST 2011 lang/lwc_da.properties
+ 15897 Sun Dec 11 08:21:12 PST 2011 lang/lwc_de.properties
+ 15993 Mon Dec 12 03:40:46 PST 2011 lang/lwc_en.properties
+ 15127 Sun Dec 11 08:21:12 PST 2011 lang/lwc_es.properties
+</xmp></code>
+
+<p>
+(the "lwc" prefix in this case matches to the pluginBaseName arg supplied to LocaleConfig)
+
+<p>
+An example of such a file might look like so:
+
+<code><xmp>
+## author: Hidendra
+
+##################
+##    General   ##
+##################
+
+# Yes/no response (mainly for /lwc info)
+yes=%green%Yes
+no=%red%No
+
+# Internal LWC error (if this shows up, something went terribly wrong most likely)
+protection.internalerror=%red%[LWC] Internal error. Notify an admin immediately.%white% :%id%
+
+# Access denied.
+protection.accessdenied=%red%Access denied.
+</xmp></code>
+
+<p>
+Note that these classes provide the admin the ability to provide their own language override
+files in the "plugins/MyPlugin/locale/" directory. In the simplest case, the admin could
+just name it "plugin.properties" (where plugin is the name of your prefix, ie. "lwc") and
+any messages found in there will override the ones from the language pack in the JAR file.
+</body>
+</html>

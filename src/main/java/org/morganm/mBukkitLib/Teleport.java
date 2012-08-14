@@ -100,6 +100,8 @@ public class Teleport {
 		safeIds[Material.RAILS.getId()] = 1;
 		safeIds[Material.STEP.getId()] = 1;		// half slab
 		safeIds[Material.SNOW.getId()] = 1;
+		safeIds[Material.SIGN_POST.getId()] = 1;
+		safeIds[Material.WALL_SIGN.getId()] = 1;
 	}
 	
 	@Inject

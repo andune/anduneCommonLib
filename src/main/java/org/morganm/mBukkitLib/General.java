@@ -53,7 +53,7 @@ import org.bukkit.inventory.ItemStack;
  * @author morganm
  *
  */
-public final class General {
+public class General {
 	// class version: 7
 	
 	private final Map<String, String> timeLongHand = new HashMap<String, String>();
