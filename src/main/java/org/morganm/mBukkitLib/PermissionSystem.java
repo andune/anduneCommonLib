@@ -33,6 +33,7 @@ package org.morganm.mBukkitLib;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
@@ -70,13 +71,12 @@ import com.sk89q.wepif.PermissionsResolverManager;
  *   that implements permissions abstraction, thus the less-than-great C-style integer values,
  *   switch statements and if/else ladders.
  *   
- *   Now that I'm moving this into it's own library, it should be refactored.
+ *   Now that I'm moving this into its own library, it should be refactored.
  * 
  * @author morganm
  *
  */
 public class PermissionSystem {
-	// class version: 16
 	public enum Type {
 		SUPERPERMS,
 		VAULT,
@@ -88,7 +88,6 @@ public class PermissionSystem {
 
 	/** For use by pure superperms systems that have no notion of group, the
 	 * convention is that groups are permissions that start with "group."
-	 * 
 	 */
     private static final String GROUP_PREFIX = "group.";
 
