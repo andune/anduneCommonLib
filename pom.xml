@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.morganm.mBukkitLib</groupId>
   <artifactId>mBukkitLib</artifactId>
-  <version>0.1</version>
+  <version>0.2</version>
   <name>mBukkitLib</name>
   <description>mBukkitLib is a common library of classes for use in Bukkit plugins</description>
   <url>https://dev.bukkit.org/server-mods/mBukkitLib/</url>
@@ -162,6 +162,7 @@
                   <include>com.sk89q:worldedit</include>
                   <include>net.milkbowl.vault:Vault</include>
                   <include>com.nijiko:permissions</include>
+                  <include>ru.tehkode:PermissionsEx</include>
                 </includes>
               </artifactSet>
 
@@ -183,6 +184,13 @@
                   <artifact>com.nijiko:permissions</artifact>
                   <includes>
                     <include>com/nijiko/permissions/PermissionHandler.class</include>
+                  </includes>
+                </filter>
+                <filter>
+                  <artifact>ru.tehkode:PermissionsEx</artifact>
+                  <includes>
+                    <include>ru/tehkode/permissions/bukkit/PermissionsEx.class</include>
+                    <include>ru/tehkode/permissions/PermissionUser.class</include>
                   </includes>
                 </filter>
               </filters>
