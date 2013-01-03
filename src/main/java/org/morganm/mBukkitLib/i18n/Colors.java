@@ -33,8 +33,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
-import org.bukkit.ChatColor;
-
 /** Code borrowed from Hidendra's LWC.
  * 
  * @author morganm
@@ -121,6 +119,17 @@ public class Colors {
         }
         return s;
     }
+    
+    /**
+     * Given a color code such as "%white%" return the color code string, which
+     * in this example would be "\u00A7F".
+     * 
+     * @param s the color key string, eg. "%white%"
+     * @return the color coded string
+     */
+    public String getColorString(String s) {
+        return colorStrings.get(s);
+    }
 
     /** Set the default color. Argument must be of color pattern form, such
      * as "%red%" or "%yellow%", etc.
@@ -128,6 +137,9 @@ public class Colors {
      * @param defaultColor
      */
     public void setDefaultColor(final String defaultColor) throws InvalidColorException {
+        if( defaultColor == null )
+            return;
+        
     	String colorString = colorStrings.get(defaultColor.toString());
     	if( colorString != null ) {
     		this.defaultColor = defaultColor;

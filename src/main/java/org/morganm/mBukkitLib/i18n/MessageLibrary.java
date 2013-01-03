@@ -10,7 +10,8 @@ import java.util.MissingResourceException;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.jar.JarFile;
-import java.util.logging.Logger;
+
+import org.slf4j.LoggerFactory;
 
 /** Message Library for localization. Responsible for loading the resource bundle.
  * 
@@ -18,7 +19,8 @@ import java.util.logging.Logger;
  *
  */
 public class MessageLibrary {
-	private final Logger log;
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(MessageLibrary.class);
+    
 	private final LocaleConfig config;
 	private boolean loaded = false;
 	private PluginResourceBundle locale;
@@ -30,7 +32,6 @@ public class MessageLibrary {
 	 */
 	MessageLibrary(final LocaleConfig config) {
 		this.config = config;
-		this.log = config.getLogger();
 	}
 	
 	/** Called to load any resources associated with this library. package visibility.

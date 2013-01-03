@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.morganm.mBukkitLib</groupId>
   <artifactId>mBukkitLib</artifactId>
-  <version>0.2</version>
+  <version>0.3-SNAPSHOT</version>
   <name>mBukkitLib</name>
   <description>mBukkitLib is a common library of classes for use in Bukkit plugins</description>
   <url>https://dev.bukkit.org/server-mods/mBukkitLib/</url>
@@ -20,7 +20,7 @@
     <snapshotRepository>
       <id>morganm-repo-snapshot</id>
       <name>Morganmc nexus repository</name>
-      <url>http://morganmc.dyndns.org/nexus/content/repositories/snapshots/</url>
+      <url>http://morganmc.org/nexus/content/repositories/snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
 
@@ -35,7 +35,7 @@
     </repository>
     <repository>
       <id>morganm-repo</id>
-      <url>http://morganmc.dyndns.org/nexus/content/groups/public/</url>
+      <url>http://morganmc.org/nexus/content/groups/public/</url>
     </repository>
   </repositories>
 
@@ -51,6 +51,19 @@
       <groupId>com.google.inject</groupId>
       <artifactId>guice</artifactId>
       <version>3.0</version>
+    </dependency>
+
+    <!-- SLF4J Logging API -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-jdk14</artifactId>
+      <version>1.7.2</version>
+      <scope>test</scope>
     </dependency>
 
     <!-- Permissions components -->

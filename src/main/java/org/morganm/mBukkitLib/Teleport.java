@@ -34,6 +34,7 @@
 package org.morganm.mBukkitLib;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -48,9 +49,8 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
  * @author morganm
  *
  */
+@Singleton
 public class Teleport {
-	// class version: 3
-	
 	public static final int FLAG_NO_WATER = 0x01; 
 	public static final int FLAG_NO_LILY_PAD = 0x02; 
 	public static final int FLAG_NO_LEAVES = 0x04; 

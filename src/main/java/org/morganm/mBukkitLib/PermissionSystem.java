@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import net.milkbowl.vault.permission.Permission;
 
@@ -49,11 +50,6 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
-import ru.tehkode.permissions.PermissionUser;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
-
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
 import com.sk89q.wepif.PermissionsResolver;
 import com.sk89q.wepif.PermissionsResolverManager;
 
@@ -76,13 +72,12 @@ import com.sk89q.wepif.PermissionsResolverManager;
  * @author morganm
  *
  */
+@Singleton
 public class PermissionSystem {
 	public enum Type {
 		SUPERPERMS,
 		VAULT,
 		WEPIF,
-		PERM2_COMPAT,
-		PEX,
 		OPS
 	}
 
@@ -97,8 +92,6 @@ public class PermissionSystem {
 	
     private net.milkbowl.vault.permission.Permission vaultPermission = null;
     private PermissionsResolver wepifPerms = null;
-    private PermissionHandler perm2Handler;
-    private PermissionsEx pex;
     
     @Inject
 	public PermissionSystem(Plugin plugin, Logger log) {
@@ -129,10 +122,6 @@ public class PermissionSystem {
 			}
 			
 			return "WEPIF" + wepifPermInUse;
-		case PERM2_COMPAT:
-			return "PERM2_COMPAT";
-		case PEX:
-			return "PEX";
 		case OPS:
 			return "OPS";
 
@@ -175,22 +164,6 @@ public class PermissionSystem {
 					systemInUse = Type.WEPIF;
 //					if( verbose )
 //						log.info(logPrefix+"using WEPIF permissions");
-					break;
-				}
-			}
-			else if( "pex".equalsIgnoreCase(system) ) {
-				if( setupPEXPermissions() ) {
-					systemInUse = Type.PEX;
-//					if( verbose )
-//						log.info(logPrefix+"using PEX permissions");
-					break;
-				}
-			}
-			else if( "perm2".equalsIgnoreCase(system) || "perm2-compat".equalsIgnoreCase(system) ) {
-				if( setupPerm2() ) {
-					systemInUse = Type.PERM2_COMPAT;
-//					if( verbose )
-//						log.info(logPrefix+"using Perm2-compatible permissions");
 					break;
 				}
 			}
@@ -237,12 +210,6 @@ public class PermissionSystem {
     	case WEPIF:
     		permAllowed = wepifPerms.hasPermission(p.getName(), permission);
     		break;
-    	case PEX:
-    		permAllowed = pex.has(p, permission);
-    		break;
-    	case PERM2_COMPAT:
-    		permAllowed = perm2Handler.has(p, permission);
-    		break;
     	case SUPERPERMS:
     		permAllowed = p.hasPermission(permission);
     		break;
@@ -262,14 +229,6 @@ public class PermissionSystem {
     		break;
     	case WEPIF:
     		permAllowed = wepifPerms.hasPermission(player, permission);
-    		break;
-    	case PEX:
-            PermissionUser user = PermissionsEx.getPermissionManager().getUser(player);
-            if (user != null)
-            	permAllowed = user.has(permission, world);
-    		break;
-    	case PERM2_COMPAT:
-    		permAllowed = perm2Handler.has(world, player, permission);
     		break;
     	case SUPERPERMS:
     	{
@@ -310,19 +269,6 @@ public class PermissionSystem {
     			group = groups[0];
     		break;
     	}
-    	case PEX:
-    	{
-            PermissionUser user = PermissionsEx.getPermissionManager().getUser(playerName);
-            if (user != null) {
-            	String[] groups = user.getGroupsNames();
-        		if( groups != null && groups.length > 0 )
-        			group = groups[0];
-            }
-    		break;
-    	}
-    	case PERM2_COMPAT:
-    		group = perm2Handler.getGroup(world, playerName);
-    		break;
     	
     	case SUPERPERMS:
     	{
@@ -389,15 +335,6 @@ public class PermissionSystem {
         return perm;
     }
 
-    private boolean setupPerm2() {
-        Plugin permissionsPlugin = plugin.getServer().getPluginManager().getPlugin("Permissions");
-        if( permissionsPlugin != null ) {
-        	perm2Handler = ((Permissions) permissionsPlugin).getHandler();
-        }
-        	
-        return (perm2Handler != null);
-    }
-    
     private boolean setupVaultPermissions()
     {
     	Plugin vault = plugin.getServer().getPluginManager().getPlugin("Vault");
@@ -453,19 +390,5 @@ public class PermissionSystem {
     	}
     	
     	return wepifPerms != null;
-    }
-    
-    private boolean setupPEXPermissions() {
-    	try {
-            Plugin perms = plugin.getServer().getPluginManager().getPlugin("PermissionsEx");
-	    	if( perms != null ) {
-	    		pex = (PermissionsEx) perms;
-	    	}
-    	}
-    	catch(Exception e) {
-    		log.info("Unexpected error trying to setup PEX permissions: "+e.getMessage());
-    	}
-    	
-    	return pex != null;
     }
 }

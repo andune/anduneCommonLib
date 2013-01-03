@@ -3,6 +3,7 @@
  */
 package org.morganm.mBukkitLib.i18n;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,16 +22,21 @@ public class LocaleStringReplacerImpl implements Locale {
 //		predefinedReplacements.put("%newline%", "\n");
 	}
 	
-	private final MessageLibrary msgLib;
-	private final String localeString;
-	private final Colors colors;
+	private MessageLibrary msgLib;
+	private String localeString;
+	private Colors colors;
 	
-	public LocaleStringReplacerImpl(final MessageLibrary msgLib, final String localeString, final Colors colors) {
-		this.msgLib = msgLib;
-		this.localeString = localeString;
-		this.colors = colors;
+	public LocaleStringReplacerImpl() {
 	}
 	
+    @Override
+    public void load(LocaleConfig config) throws IOException {
+        this.localeString = config.getLocale();
+        this.colors = config.getColors();
+        this.msgLib = new MessageLibrary(config);
+        this.msgLib.load();
+    }
+
 	@Override
 	public String getLocale() {
 		return localeString;

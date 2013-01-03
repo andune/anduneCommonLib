@@ -3,12 +3,21 @@
  */
 package org.morganm.mBukkitLib.i18n;
 
+import java.io.IOException;
+
 
 /**
  * @author morganm
  *
  */
 public interface Locale {
+    /**
+     * Do any loading required to ready this object for use, based on the config
+     * parameters passed in. By contract, this method must be invoked prior to
+     * the first call to getMessage().
+     */
+    public void load(LocaleConfig config) throws IOException;
+
 	/** Return a message from the Locale object, optionally doing string replacement
 	 * on the given args (depending on the underlying implementation).
 	 * 

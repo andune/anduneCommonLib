@@ -21,10 +21,7 @@ public class LocaleFactory {
 	 * @return
 	 * @throws IOException
 	 */
-	public static Locale getLocale(final LocaleConfig config) throws IOException {
-		MessageLibrary msgLib = new MessageLibrary(config);
-		msgLib.load();
-		
-		return new LocaleStringReplacerImpl(msgLib, config.getLocale(), config.getColors());
+	public static Locale getLocale()  {
+		return new LocaleStringReplacerImpl();
 	}
 }

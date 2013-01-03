@@ -4,30 +4,31 @@
 package org.morganm.mBukkitLib;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.logging.Logger;
 
-import org.bukkit.plugin.Plugin;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author morganm
  *
  */
 public class JarUtils {
-	private final Logger log;
-	private Plugin plugin;
-	private File jarFile;
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(JarUtils.class);
+    
+	private final File dataFolder;
+	private final File jarFile;
 	
-	public JarUtils(Plugin plugin, Logger log, File jarFile) {
-		this.plugin = plugin;
+	public JarUtils(File dataFolder, File jarFile) {
+		this.dataFolder = dataFolder;
 		this.jarFile = jarFile;
-		this.log = log;
 	}
 	
 	/** Code adapted from Puckerpluck's MultiInv plugin.
@@ -35,24 +36,27 @@ public class JarUtils {
 	 * @param string
 	 * @return
 	 */
-    public void copyConfigFromJar(String fileName, File outfile) {
-        File file = new File(plugin.getDataFolder(), fileName);
+    public void copyConfigFromJar(String fileName, File outfile) throws FileNotFoundException, IOException {
+        File file = new File(dataFolder, fileName);
         
         if (!outfile.canRead()) {
-            try {
+//            try {
             	JarFile jar = new JarFile(jarFile);
             	
                 file.getParentFile().mkdirs();
                 JarEntry entry = jar.getJarEntry(fileName);
+                if( entry == null )
+                    throw new FileNotFoundException("Couldn't locate file "+fileName+" in jar file "+jar.getName());
+                
                 InputStream is = jar.getInputStream(entry);
                 FileOutputStream os = new FileOutputStream(outfile);
                 byte[] buf = new byte[(int) entry.getSize()];
                 is.read(buf, 0, (int) entry.getSize());
                 os.write(buf);
                 os.close();
-            } catch (Exception e) {
-                log.warning("Could not copy config file "+fileName+" to default location");
-            }
+//            } catch (Exception e) {
+//                log.warning("Could not copy config file "+fileName+" to default location");
+//            }
         }
     }
     
@@ -73,7 +77,7 @@ public class JarUtils {
         	else if( o instanceof String )
         		buildNum = Integer.parseInt((String) o);
         } catch (Exception e) {
-            log.warning("Could not load build number from JAR");
+            log.warn("Could not load build number from JAR");
         }
         
         return buildNum;

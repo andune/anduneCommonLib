@@ -4,7 +4,6 @@
 package org.morganm.mBukkitLib.i18n;
 
 import java.io.File;
-import java.util.logging.Logger;
 
 /**
  * @author morganm
@@ -15,7 +14,6 @@ public final class LocaleConfig {
 	private final File dataFolder;
 	private final File jarFile;
 	private final String pluginBaseName;
-	private final Logger logger;
 	private final Colors colors;
 	
 	/**
@@ -29,12 +27,11 @@ public final class LocaleConfig {
 	 */
 	public LocaleConfig(final String locale, final File dataFolder,
 			final String pluginBaseName, final File jarFile,
-			final Logger logger, final Colors colors) {
+			final Colors colors) {
 		this.locale = locale;
 		this.dataFolder = dataFolder;
 		this.pluginBaseName = pluginBaseName;
 		this.jarFile = jarFile;
-		this.logger = logger;
 		if( colors != null )
 			this.colors = colors;
 		else
@@ -55,10 +52,6 @@ public final class LocaleConfig {
 
 	public String getLocale() {
 		return locale;
-	}
-	
-	public Logger getLogger() {
-		return logger;
 	}
 	
 	public Colors getColors() {
