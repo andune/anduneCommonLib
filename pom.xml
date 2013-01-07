@@ -125,6 +125,16 @@
 
     <!-- Plugins -->
     <plugins>
+      <!-- License check; run 'mvn license:check' or 'mvn license:format' -->
+      <plugin>
+        <groupId>com.mycila.maven-license-plugin</groupId>
+        <artifactId>maven-license-plugin</artifactId>
+        <configuration>
+          <header>src/main/license/header.txt</header>
+          <strictCheck>true</strictCheck>
+        </configuration>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antrun-plugin</artifactId>
