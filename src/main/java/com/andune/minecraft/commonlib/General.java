@@ -31,7 +31,7 @@
 /**
  * 
  */
-package org.morganm.mBukkitLib;
+package com.andune.minecraft.commonlib;
 
 import java.util.HashMap;
 import java.util.Map;

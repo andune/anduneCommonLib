@@ -1,26 +1,25 @@
 <!--
-  Maven build file for mBukkitLib
+  Maven build file for anduneCommonLib
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.morganm.mBukkitLib</groupId>
-  <artifactId>mBukkitLib</artifactId>
-  <version>0.3-SNAPSHOT</version>
-  <name>mBukkitLib</name>
-  <description>mBukkitLib is a common library of classes for use in Bukkit plugins</description>
-  <url>https://dev.bukkit.org/server-mods/mBukkitLib/</url>
+  <groupId>com.andune.minecraft.commonlib</groupId>
+  <artifactId>commonlib</artifactId>
+  <version>0.4-SNAPSHOT</version>
+  <name>commonlib</name>
+  <description>commonlib is a library of classes for use Andune's MineCraft plugins</description>
 
   <scm>
-    <connection>scm:git:git://github.com/morganm/mBukkitLib.git</connection>
-    <url>https://github.com/morganm/mBukkitLib</url>
-    <developerConnection>scm:git:git@github.com:morganm/mBukkitLib.git</developerConnection>
+    <connection>scm:git:git://github.com/andune/anduneCommonLib.git</connection>
+    <url>https://github.com/andune/anduneCommonLib</url>
+    <developerConnection>scm:git:git@github.com:andune/anduneCommonLib.git</developerConnection>
   </scm>
 
   <distributionManagement>
     <snapshotRepository>
-      <id>morganm-repo-snapshot</id>
-      <name>Morganmc nexus repository</name>
-      <url>http://morganmc.org/nexus/content/repositories/snapshots/</url>
+      <id>andune-repo-snapshot</id>
+      <name>Andune nexus repository</name>
+      <url>http://andune.com/nexus/content/repositories/snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
 
@@ -34,18 +33,20 @@
       <url>http://repo.bukkit.org/content/groups/public/</url>
     </repository>
     <repository>
-      <id>morganm-repo</id>
+      <id>andune-repo</id>
       <url>http://morganmc.org/nexus/content/groups/public/</url>
     </repository>
   </repositories>
 
   <dependencies>
     <!-- Bukkit -->
+<!--
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
       <version>1.3.1-R1.0</version>
     </dependency>
+-->
 
     <dependency>
       <groupId>com.google.inject</groupId>

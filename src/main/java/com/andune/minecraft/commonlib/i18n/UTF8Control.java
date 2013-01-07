@@ -26,7 +26,7 @@
  * either expressed or implied, of anybody else.
  */
 
-package org.morganm.mBukkitLib.i18n;
+package com.andune.minecraft.commonlib.i18n;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -31,13 +31,13 @@
 /**
  * 
  */
-package org.morganm.mBukkitLib;
+package com.andune.minecraft.commonlib;
 
 
 /** 
+ * @deprecated use slf4j instead
  * 
  * @author morganm
- *
  */
 public interface Logger {
 	public abstract void info(Object...msg);

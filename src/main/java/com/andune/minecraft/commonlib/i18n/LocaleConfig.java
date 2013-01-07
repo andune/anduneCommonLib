@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.morganm.mBukkitLib.i18n;
+package com.andune.minecraft.commonlib.i18n;
 
 import java.io.File;
 

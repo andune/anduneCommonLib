@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.morganm.mBukkitLib;
+package com.andune.minecraft.commonlib;
 
 import java.io.File;
 import java.io.FileNotFoundException;
