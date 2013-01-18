@@ -29,6 +29,7 @@ public class YamlSerializer implements Serializer {
     public Reflections read(InputStream inputStream) {
         Yaml yaml = new Yaml();
         Reflections reflections = new Reflections();
+        @SuppressWarnings("unchecked")
         Map<String, Map<String, Collection<String>>> map =
                 (Map<String, Map<String, Collection<String>>>) yaml.load(inputStream);
         for(String index : map.keySet()) {
@@ -39,7 +40,6 @@ public class YamlSerializer implements Serializer {
             }
         }
         return reflections;
-//        return yaml.loadAs(inputStream, Reflections.class);
     }
 
     @Override
@@ -55,27 +55,16 @@ public class YamlSerializer implements Serializer {
 
     @Override
     public String toString(Reflections reflections) {
-        System.err.println("reflections.toString: "+reflections.toString());
-        System.err.println("reflections.getStore: "+reflections.getStore());
-        System.err.println("reflections.getStore.getKeysCount: "+reflections.getStore().getKeysCount());
         Yaml yaml = new Yaml();
-//        String ret = yaml.dumpAsMap(reflections.getStore());
-//        String ret = yaml.dumpAsMap(
-//        StringBuilder sb = new StringBuilder();
-//        DumperOptions dumperOptions = new DumperOptions();
-//        dumperOptions.setIndent(2);
-//        Yaml yamlIndented = new Yaml(dumperOptions);
+        // the Yaml dumper can only effectively dump primitives, Collections
+        // and JavaBeans. Since the Reflection and it's Store class don't adhere
+        // to JavaBeans, we first convert them into primitive maps that the
+        // Yaml dumper has no problem dumping accurately.
         Map<String, Map<String, Collection<String>>> dumpMap = new HashMap<String, Map<String, Collection<String>>>();
         Map<String, Multimap<String, String>> storeMap = reflections.getStore().getStoreMap();
         for(String key : storeMap.keySet()) {
             dumpMap.put(key, storeMap.get(key).asMap());
-//            sb.append(key+":\n");
-//            Multimap<String, String> multiMap = storeMap.get(key);
-//            sb.append(yamlIndented.dumpAsMap(multiMap.asMap()));
         }
-//        String ret = sb.toString();
-        String ret = yaml.dump(dumpMap);
-        System.err.println("ret: "+ret);
-        return ret;
+        return yaml.dump(dumpMap);
     }
 }
