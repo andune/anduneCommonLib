@@ -5,14 +5,29 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.andune.minecraft.commonlib</groupId>
   <artifactId>commonlib</artifactId>
+  <packaging>jar</packaging>
   <version>0.4-SNAPSHOT</version>
   <name>commonlib</name>
   <description>commonlib is a library of classes for use Andune's MineCraft plugins</description>
 
+  <licenses>
+    <license>
+      <name>GNU General Public License</name>
+      <url>http://www.gnu.org/licenses/gpl-2.0.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>Andune</id>
+      <name>Andune</name>
+      <email>andune.alleria@gmail.com</email>
+    </developer>
+  </developers>
+
   <scm>
     <connection>scm:git:git://github.com/andune/anduneCommonLib.git</connection>
     <url>https://github.com/andune/anduneCommonLib</url>
-    <developerConnection>scm:git:git@github.com:andune/anduneCommonLib.git</developerConnection>
   </scm>
 
   <distributionManagement>
@@ -128,20 +143,6 @@
         </executions>
       </plugin>
 
-      <!-- Compile plugin -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.4</version>
-        <configuration>
-          <verbose>true</verbose>
-          <fork>true</fork>
-          <source>1.6</source>
-          <target>1.6</target>
-          <compilerVersion>1.6</compilerVersion>
-        </configuration>
-      </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
@@ -156,12 +157,52 @@
               <artifactSet>
                 <includes>
                   <include>javax.inject:javax.inject</include>
+                  <include>org.slf4j:slf4j-api</include>
+<!--
                   <include>aopalliance:aopalliance</include>
+-->
                 </includes>
               </artifactSet>
+
+              <filters>
+                <filter>
+                  <artifact>org.slf4j:slf4j-api</artifact>
+                  <includes>
+                    <include>org/slf4j/helpers/FormattingTuple*</include>
+                    <include>org/slf4j/helpers/MessageFormatter*</include>
+                  </includes>
+                </filter>
+                <filter>
+                  <artifact>javax.inject:javax.inject</artifact>
+                  <includes>
+                    <include>javax/inject/Inject.class</include>
+                  </includes>
+                </filter>
+              </filters>
+
+              <relocations>
+                <relocation>
+                  <pattern>org.slf4j</pattern>
+                  <shadedPattern>${project.groupId}.${project.artifactId}.slf4j</shadedPattern>
+                </relocation>
+              </relocations>
             </configuration>
           </execution>
         </executions>
+      </plugin>
+
+      <!-- Compile plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <verbose>true</verbose>
+          <fork>true</fork>
+          <source>1.6</source>
+          <target>1.6</target>
+          <compilerVersion>1.6</compilerVersion>
+        </configuration>
       </plugin>
 
       <!-- JAR creation plugin -->
@@ -192,8 +233,41 @@
           <preparationGoals>assembly:assembly</preparationGoals>
           <goals>assembly:assembly</goals>
           <tagNameFormat>@{project.version}</tagNameFormat>
+          <mavenExecutorId>forked-path</mavenExecutorId>
         </configuration>
       </plugin>
     </plugins>
   </build>
+
+  <!-- GPG signing -->
+  <profiles>
+    <profile>
+      <id>release-sign-artifacts</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.1</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
 </project>
