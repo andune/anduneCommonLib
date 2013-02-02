@@ -13,6 +13,7 @@ import java.util.Map;
 
 import org.reflections.Reflections;
 import org.reflections.serializers.Serializer;
+import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.Utils;
 import org.yaml.snakeyaml.Yaml;
 
@@ -28,7 +29,7 @@ public class YamlSerializer implements Serializer {
     @Override
     public Reflections read(InputStream inputStream) {
         Yaml yaml = new Yaml();
-        Reflections reflections = new Reflections();
+        Reflections reflections = new Reflections(new ConfigurationBuilder());
         @SuppressWarnings("unchecked")
         Map<String, Map<String, Collection<String>>> map =
                 (Map<String, Map<String, Collection<String>>>) yaml.load(inputStream);
