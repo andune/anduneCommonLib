@@ -31,18 +31,38 @@
 package com.andune.minecraft.commonlib;
 
 
-/** 
- * @deprecated use slf4j instead
+/**
+ * Modeled after slf4j methods, this is a simplified interface. This allows
+ * us to map directly to slf4j those who want speed or want to use one of
+ * slf4j's other logging backends, but while maintaining an extremely thin
+ * footprint for plugins using this logging interface.
  * 
  * @author morganm
  */
 public interface Logger {
-	public abstract void info(Object...msg);
-	public abstract void warn(Object...msg);
-	public abstract void warn(Throwable t, Object... msg);
-	public abstract void severe(Object...msg);
-	public abstract void severe(Throwable t, Object... msg);
+    public abstract boolean isDebugEnabled();
+    
+    public abstract void info(String msg);
+    public abstract void info(String format, Object obj1);
+    public abstract void info(String format, Object obj1, Object obj2);
+    public abstract void info(String format, Object...args);
+    
+    public abstract void warn(String msg);
+    public abstract void warn(String format, Object obj1);
+    public abstract void warn(String format, Object obj1, Object obj2);
+    public abstract void warn(String format, Object...args);
+    
+    public abstract void warn(String msg, Throwable t);
 	
-	public abstract void debug(Object...msg);
-	public abstract void devDebug(Object...msg);
+    public abstract void error(String msg);
+    public abstract void error(String format, Object obj1);
+    public abstract void error(String format, Object obj1, Object obj2);
+    public abstract void error(String format, Object...args);
+    
+    public abstract void error(String msg, Throwable t);
+    
+    public abstract void debug(String msg);
+    public abstract void debug(String format, Object obj1);
+    public abstract void debug(String format, Object obj1, Object obj2);
+    public abstract void debug(String format, Object...args);
 }
