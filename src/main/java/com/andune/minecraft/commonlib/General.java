@@ -33,25 +33,16 @@ package com.andune.minecraft.commonlib;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.inject.Inject;
-
-import org.slf4j.LoggerFactory;
-
 /**
  * @author morganm
  *
  */
 public class General {
-    // class version: 8
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(General.class);
+    private static final Logger log = LoggerFactory.getLogger(General.class);
 	
 	private final Map<String, String> timeLongHand = new HashMap<String, String>();
 	private final Map<String, String> timeShortHand = new HashMap<String, String>();
 
-	@Inject
-	private General() {
-	}
-    
     /** Given time input, such as of the form "1d" "1w 2d 3h", this will return
      * the number of milliseconds that time format equals. For example, "1d" is
      * 86400 seconds, so this method would return 86400000.

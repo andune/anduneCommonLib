@@ -38,7 +38,8 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.jar.JarFile;
 
-import org.slf4j.LoggerFactory;
+import com.andune.minecraft.commonlib.Logger;
+import com.andune.minecraft.commonlib.LoggerFactory;
 
 /** Message Library for localization. Responsible for loading the resource bundle.
  * 
@@ -46,7 +47,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class MessageLibrary {
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(MessageLibrary.class);
+    private static final Logger log = LoggerFactory.getLogger(MessageLibrary.class);
     
 	private final LocaleConfig config;
 	private boolean loaded = false;
