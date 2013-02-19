@@ -114,7 +114,7 @@ public class LoggerJUL implements Logger {
     @Override
     public void info(String format, Object... args) {
         if (log.isLoggable(Level.INFO)) {
-            FormattingTuple ft = MessageFormatter.format(format, args);
+            FormattingTuple ft = MessageFormatter.arrayFormat(format, args);
             log(SELF, Level.INFO, ft.getMessage(), ft.getThrowable());
         }
     }
@@ -145,7 +145,7 @@ public class LoggerJUL implements Logger {
     @Override
     public void warn(String format, Object... args) {
         if (log.isLoggable(Level.WARNING)) {
-            FormattingTuple ft = MessageFormatter.format(format, args);
+            FormattingTuple ft = MessageFormatter.arrayFormat(format, args);
             log(SELF, Level.WARNING, ft.getMessage(), ft.getThrowable());
         }
     }
@@ -183,7 +183,7 @@ public class LoggerJUL implements Logger {
     @Override
     public void error(String format, Object... args) {
         if (log.isLoggable(Level.SEVERE)) {
-            FormattingTuple ft = MessageFormatter.format(format, args);
+            FormattingTuple ft = MessageFormatter.arrayFormat(format, args);
             log(SELF, Level.SEVERE, ft.getMessage(), ft.getThrowable());
         }
     }
@@ -221,9 +221,8 @@ public class LoggerJUL implements Logger {
     @Override
     public void debug(String format, Object... args) {
         if (log.isLoggable(Level.FINE)) {
-            FormattingTuple ft = MessageFormatter.format(format, args);
+            FormattingTuple ft = MessageFormatter.arrayFormat(format, args);
             log(SELF, Level.FINE, ft.getMessage(), ft.getThrowable());
         }
     }
-
 }
