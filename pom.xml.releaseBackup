@@ -1,0 +1,273 @@
+<!--
+  Maven build file for anduneCommonLib
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.andune.minecraft.commonlib</groupId>
+  <artifactId>commonlib</artifactId>
+  <packaging>jar</packaging>
+  <version>0.4-SNAPSHOT</version>
+  <name>commonlib</name>
+  <description>commonlib is a library of classes for use Andune's MineCraft plugins</description>
+
+  <licenses>
+    <license>
+      <name>GNU General Public License</name>
+      <url>http://www.gnu.org/licenses/gpl-2.0.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>Andune</id>
+      <name>Andune</name>
+      <email>andune.alleria@gmail.com</email>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git://github.com/andune/anduneCommonLib.git</connection>
+    <url>https://github.com/andune/anduneCommonLib</url>
+  </scm>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>andune-repo-snapshot</id>
+      <name>Andune nexus repository</name>
+      <url>http://andune.com/nexus/content/repositories/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+  <repositories>
+    <repository>
+      <id>onarandombox</id>
+      <url>http://repo.onarandombox.com/content/groups/public</url>
+    </repository>
+    <repository>
+      <id>bukkit-repo</id>
+      <url>http://repo.bukkit.org/content/groups/public/</url>
+    </repository>
+    <repository>
+      <id>andune-repo</id>
+      <url>http://morganmc.org/nexus/content/groups/public/</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
+      <version>3.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.reflections</groupId>
+      <artifactId>reflections</artifactId>
+      <version>0.9.8</version>
+    </dependency>
+    <dependency>
+      <groupId>org.yaml</groupId>
+      <artifactId>snakeyaml</artifactId>
+      <version>1.9</version>
+    </dependency>
+
+    <!-- SLF4J Logging API -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-jdk14</artifactId>
+      <version>1.7.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+    <finalName>${project.artifactId}</finalName>
+
+    <!-- Resources -->
+    <resources>
+      <resource>
+        <targetPath>.</targetPath>
+        <directory>${basedir}/src/main/resources/</directory>
+      </resource>
+      <resource>
+        <targetPath>.</targetPath>
+        <directory>${basedir}</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>build.number</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>plugin.yml</include>
+        </includes>
+      </resource>
+    </resources>
+
+    <!-- Plugins -->
+    <plugins>
+      <!-- License check; run 'mvn license:check' or 'mvn license:format' -->
+      <plugin>
+        <groupId>com.mycila.maven-license-plugin</groupId>
+        <artifactId>maven-license-plugin</artifactId>
+        <configuration>
+          <header>src/main/license/header.txt</header>
+          <strictCheck>true</strictCheck>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.7</version><!--$NO-MVN-MAN-VER$-->
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <configuration>
+              <target>
+                <buildnumber />
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>1.7.1</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <artifactSet>
+                <includes>
+                  <include>javax.inject:javax.inject</include>
+                  <include>org.slf4j:slf4j-api</include>
+<!--
+                  <include>aopalliance:aopalliance</include>
+-->
+                </includes>
+              </artifactSet>
+
+              <filters>
+                <filter>
+                  <artifact>org.slf4j:slf4j-api</artifact>
+                  <includes>
+                    <include>org/slf4j/helpers/FormattingTuple*</include>
+                    <include>org/slf4j/helpers/MessageFormatter*</include>
+                  </includes>
+                </filter>
+                <filter>
+                  <artifact>javax.inject:javax.inject</artifact>
+                  <includes>
+                    <include>javax/inject/Inject.class</include>
+                  </includes>
+                </filter>
+              </filters>
+
+              <relocations>
+                <relocation>
+                  <pattern>org.slf4j</pattern>
+                  <shadedPattern>${project.groupId}.${project.artifactId}.slf4j</shadedPattern>
+                </relocation>
+              </relocations>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Compile plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <verbose>true</verbose>
+          <fork>true</fork>
+          <source>1.6</source>
+          <target>1.6</target>
+          <compilerVersion>1.6</compilerVersion>
+        </configuration>
+      </plugin>
+
+      <!-- JAR creation plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.3.1</version>
+        <configuration>
+          <archive>
+            <addMavenDescriptor>true</addMavenDescriptor>
+            <manifest>
+              <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+            </manifest>
+            <manifestEntries>
+              <Implementation-Build>${buildNumber}</Implementation-Build>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+
+      <!-- Release -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.2.2</version><!--$NO-MVN-MAN-VER$-->
+        <configuration>
+          <preparationGoals>assembly:assembly</preparationGoals>
+          <goals>assembly:assembly</goals>
+          <tagNameFormat>@{project.version}</tagNameFormat>
+          <mavenExecutorId>forked-path</mavenExecutorId>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <!-- GPG signing -->
+  <profiles>
+    <profile>
+      <id>release-sign-artifacts</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.1</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+</project>
