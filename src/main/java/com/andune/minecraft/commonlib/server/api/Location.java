@@ -32,6 +32,7 @@ package com.andune.minecraft.commonlib.server.api;
 
 
 
+
 /** API for handling Location objects.
  * 
  * @author andune
@@ -164,4 +165,21 @@ public interface Location {
      * @return the location string
      */
     public String shortLocationString();
+
+    /**
+     * Plays an effect to all players within a default radius around this location.
+     *
+     * @param effect the {@link Effect}
+     * @param data a data bit needed for some effects
+     */
+    public void playEffect(Effect effect, int data);
+
+    /**
+     * Play a Sound at this location.
+     *
+     * @param sound The sound to play
+     * @param volume The volume of the sound
+     * @param pitch The pitch of the sound
+     */
+    public void playSound(Sound sound, float volume, float pitch);
 }
