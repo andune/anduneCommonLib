@@ -51,4 +51,9 @@ public abstract class LocationAbstractImpl implements Location {
             worldName = "(world deleted)";
         return worldName+","+getBlockX()+","+getBlockY()+","+getBlockZ();
     }
+
+    @Override
+    public String toString() {
+        return shortLocationString();
+    }
 }
