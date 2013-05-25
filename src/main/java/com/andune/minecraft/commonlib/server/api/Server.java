@@ -97,6 +97,16 @@ public interface Server {
      */
     public Player getPlayer(String playerName);
 
+    /**
+     * Gets the player by the given name, regardless if they are offline or online.
+     * <p>
+     * This will return an object even if the player does not exist. To this method, all players will exist.
+     *
+     * @param name Name of the player to retrieve
+     * @return OfflinePlayer object
+     */
+    public OfflinePlayer getOfflinePlayer(String name);
+    
     /** Given a string, look for the best possible player match. Returned
      * object could be of subclass Player (if the player is online).
      * 
