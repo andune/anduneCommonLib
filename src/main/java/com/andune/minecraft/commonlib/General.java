@@ -33,15 +33,28 @@ package com.andune.minecraft.commonlib;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import com.andune.minecraft.commonlib.i18n.Locale;
+
 /**
  * @author morganm
  *
  */
+@Singleton
 public class General {
     private static final Logger log = LoggerFactory.getLogger(General.class);
 	
 	private final Map<String, String> timeLongHand = new HashMap<String, String>();
 	private final Map<String, String> timeShortHand = new HashMap<String, String>();
+	private final Locale locale;
+
+	@Inject
+    private General(Locale locale) {
+	    this.locale = locale;
+        setupTimeLocaleStrings();
+    }
 
     /** Given time input, such as of the form "1d" "1w 2d 3h", this will return
      * the number of milliseconds that time format equals. For example, "1d" is
@@ -51,14 +64,19 @@ public class General {
      * @return
      */
     public long parseTimeInput(final String input) throws NumberFormatException {
+        log.debug("parseTimeInput() input={}", input);
     	long time = 0;
-    	
+
     	String[] args = input.split(" ");
     	for(int i=0; i < args.length; i++) {
     		long multiplier = 1000;	// milliseconds multiplier
     		int index = -1;
     		
-    		if( (index = args[i].indexOf(timeShortHand.get("mo"))) != -1 ) {		// month
+            log.debug("parseTimeInput() parsing arg {}, value={}", i, args[i]);
+            if( (index = args[i].indexOf(timeShortHand.get("y"))) != -1 ) {             // year
+                multiplier *= 86400 * 365;
+            }
+            else if( (index = args[i].indexOf(timeShortHand.get("mo"))) != -1 ) {		// month
     			multiplier *= 86400 * 31;
     		}
     		else if( (index = args[i].indexOf(timeShortHand.get("w"))) != -1 ) {		// week
@@ -84,14 +102,19 @@ public class General {
     	return time;
     }
 
-    /** Given milliseconds as input, this will return a string that represents
+    /**
+     * Given milliseconds as input, this will return a string that represents
      * that time format.
      * 
      * @param seconds
-     * @param useShortHand set to true to use shorthand notation. shorthand will return a string
-     * of the form "4d3h2m" whereas this set to false would return "4 days 3 hours 2 minutes"
-     * @param mostSignificant Most significant string to show. "mo" for month, "w" for week,
-     * "d" for day, "m" for minute and null to include seconds
+     * @param useShortHand
+     *            set to true to use shorthand notation. shorthand will return
+     *            a string of the form "4d3h2m" whereas this set to false would
+     *            return "4 days 3 hours 2 minutes"
+     * @param mostSignificant
+     *            Most significant string to show. "y" for year, "mo" for
+     *            month, "w" for week, "d" for day, "m" for minute and null to
+     *            include seconds
      * 
      * @return
      * @throws NumberFormatException
@@ -100,6 +123,28 @@ public class General {
     	final StringBuffer sb = new StringBuffer();
     	long seconds = millis / 1000;		// chop down to seconds
     	
+        if( seconds >= (86400 * 365) ) {
+            long years = seconds / (86400 * 365);
+            log.debug("years={}",years);
+            if( years > 0 ) {
+                sb.append(years);
+                if( useShortHand )
+                    sb.append(timeShortHand.get("y"));
+                else {
+                    sb.append(" ");
+                    if( years > 1 )
+                        sb.append(timeLongHand.get("years"));
+                    else
+                        sb.append(timeLongHand.get("year"));
+                }
+            }
+            seconds -= years * (86400 * 365);
+        }
+        // "mostSignificant" is only passed in code (no user input) so this string
+        // is not localized.
+        if( mostSignificant != null && mostSignificant.startsWith("y") )
+            return sb.toString();
+        
     	if( seconds >= (86400 * 31) ) {
     		long months = seconds / (86400 * 31);
 	    	log.debug("months={}",months);
@@ -241,4 +286,62 @@ public class General {
     	return sb.toString();
     }
 
+    private void setupTimeLocaleStrings() {
+        timeLongHand.clear();
+        timeShortHand.clear();
+        
+        // default English is hard-coded so that even without a Locale specified,
+        // the time-related functions will work.
+        if( locale == null || "en".equalsIgnoreCase(locale.getLocale()) ) {
+            timeLongHand.put("year", "year");
+            timeLongHand.put("years", "years");
+            timeLongHand.put("month", "month");
+            timeLongHand.put("months", "months");
+            timeLongHand.put("week", "week");
+            timeLongHand.put("weeks", "weeks");
+            timeLongHand.put("day", "day");
+            timeLongHand.put("days", "days");
+            timeLongHand.put("hour", "hour");
+            timeLongHand.put("hours", "hours");
+            timeLongHand.put("minute", "minute");
+            timeLongHand.put("minutes", "minutes");
+            timeLongHand.put("second", "second");
+            timeLongHand.put("seconds", "seconds");
+            
+            timeShortHand.put("y", "y");
+            timeShortHand.put("mo", "mo");
+            timeShortHand.put("w", "w");
+            timeShortHand.put("d", "d");
+            timeShortHand.put("h", "h");
+            timeShortHand.put("m", "m");
+            timeShortHand.put("s", "s");
+        }
+        
+        // even if "en" is set and receives defaults from above, this allows
+        // the actual locale specified to override the hardcoded defaults
+        if( locale != null ) {
+            timeLongHand.put("year", locale.getMessage("year"));
+            timeLongHand.put("years", locale.getMessage("years"));
+            timeLongHand.put("month", locale.getMessage("month"));
+            timeLongHand.put("months", locale.getMessage("months"));
+            timeLongHand.put("week", locale.getMessage("week"));
+            timeLongHand.put("weeks", locale.getMessage("weeks"));
+            timeLongHand.put("day", locale.getMessage("day"));
+            timeLongHand.put("days", locale.getMessage("days"));
+            timeLongHand.put("hour", locale.getMessage("hour"));
+            timeLongHand.put("hours", locale.getMessage("hours"));
+            timeLongHand.put("minute", locale.getMessage("minute"));
+            timeLongHand.put("minutes", locale.getMessage("minutes"));
+            timeLongHand.put("second", locale.getMessage("second"));
+            timeLongHand.put("seconds", locale.getMessage("seconds"));
+            
+            timeShortHand.put("y", locale.getMessage("YEAR_SHORTHAND"));
+            timeShortHand.put("mo", locale.getMessage("MONTH_SHORTHAND"));
+            timeShortHand.put("w", locale.getMessage("WEEK_SHORTHAND"));
+            timeShortHand.put("d", locale.getMessage("DAY_SHORTHAND"));
+            timeShortHand.put("h", locale.getMessage("HOUR_SHORTHAND"));
+            timeShortHand.put("m", locale.getMessage("MINUTE_SHORTHAND"));
+            timeShortHand.put("s", locale.getMessage("SECOND_SHORTHAND"));
+        }
+    }
 }
