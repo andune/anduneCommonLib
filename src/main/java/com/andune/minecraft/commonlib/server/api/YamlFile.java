@@ -62,4 +62,12 @@ public interface YamlFile {
      * @return root ConfigurationSection.
      */
     public ConfigurationSection getRootConfigurationSection();
+
+    /**
+     * Create a ConfigurationSection object at the given path.
+     * 
+     * @param path Path of the ConfigurationSection to create
+     * @return ConfigurationSection
+     */
+    public ConfigurationSection createConfigurationSection(String path);
 }
