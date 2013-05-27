@@ -30,6 +30,8 @@
  */
 package com.andune.minecraft.commonlib.server.api;
 
+import java.util.Collection;
+
 
 /**
  * @author andune
@@ -68,4 +70,21 @@ public interface World {
      * @return Maximum height of the world
      */
     public int getMaxHeight();
+    
+    /**
+     * Get any child worlds. For example, for a world named "world", this would
+     * return the worlds "world_nether" and "world_the_end".
+     * 
+     * @return any child worlds. The result is guaranteed not to be null,
+     *         though it may be empty.
+     */
+    public Collection<World> getChildWorlds();
+    
+    /**
+     * Get the parent world, if any. For example, for a world named
+     * "world_nether", this would return the world "world".
+     * 
+     * @return the parent world, or possibly null
+     */
+    public World getParentWorld();
 }
