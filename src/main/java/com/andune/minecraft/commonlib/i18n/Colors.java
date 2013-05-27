@@ -148,4 +148,14 @@ public class Colors {
     		throw new InvalidColorException("Invalid color: "+defaultColor);
     }
     public String getDefaultColor() { return defaultColor; }
+    
+    /**
+     * Convenience method to return the actual color code for the
+     * default color string.
+     * 
+     * @return
+     */
+    public String getDefaultColorString() {
+        return colorStrings.get("%default_color%");
+    }
 }
