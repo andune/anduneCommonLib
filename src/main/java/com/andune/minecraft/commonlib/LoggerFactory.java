@@ -36,18 +36,33 @@ package com.andune.minecraft.commonlib;
  */
 public class LoggerFactory {
     private static Class<?> loggerImpl = LoggerJUL.class;  // default to JUL
+    private static String prefix = null;
     
     public static void setLoggerImpl(Class<?> clazz) {
         loggerImpl = clazz;
     }
 
+    /**
+     * Since the intent of this logger is to be used as a replacement for
+     * Minecraft server logging (such as Bukkit), we allow a single call
+     * to set the prefix for all future loggers. This keeps the .getLogger()
+     * call simple but still allows us to put something like a plugin
+     * prefix ahead of all log messages.
+     * 
+     * @param prefix
+     * @return
+     */
+    public static void setLoggerPrefix(String prefix) {
+    	LoggerFactory.prefix = prefix;
+    }
+
     public static Logger getLogger(String name) {
         if( LoggerSlf4jImpl.class.equals(loggerImpl) ) {
-            return new LoggerSlf4jImpl(name);
+            return new LoggerSlf4jImpl(name, prefix);
         }
         // JUL is default, we use it if nothing else we know is specified
         else {
-            return new LoggerJUL(name);
+            return new LoggerJUL(name, prefix);
         }
     }
     public static Logger getLogger(Class<?> clazz) {

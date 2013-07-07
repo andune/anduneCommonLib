@@ -44,14 +44,17 @@ import org.slf4j.helpers.MessageFormatter;
  */
 public class LoggerJUL implements Logger {
     static String SELF = LoggerJUL.class.getName();
+    private final String prefix;
     
     private final java.util.logging.Logger log;
     
     protected LoggerJUL(java.util.logging.Logger log) {
         this.log = log;
+        prefix = null;
     }
-    protected LoggerJUL(String name) {
+    protected LoggerJUL(String name, String prefix) {
         this.log = java.util.logging.Logger.getLogger(name);
+        this.prefix = prefix;
     }
     
     @Override
@@ -71,12 +74,18 @@ public class LoggerJUL implements Logger {
      * @param t
      */
     private void log(String callerFQCN, Level level, String msg, Throwable t) {
-      // millis and thread are filled by the constructor
-      LogRecord record = new LogRecord(level, msg);
-      record.setLoggerName(log.getName());
-      record.setThrown(t);
-      fillCallerData(callerFQCN, record);
-      log.log(record);
+		// Performance Implementation note: This prefix check will be optimized
+		// away (if not in use) by a good JIT compiler since the prefix variable
+		// is final.
+    	if( prefix != null )
+    		msg = prefix + msg;
+    	
+    	// millis and thread are filled by the constructor
+    	LogRecord record = new LogRecord(level, msg);
+    	record.setLoggerName(log.getName());
+    	record.setThrown(t);
+    	fillCallerData(callerFQCN, record);
+    	log.log(record);
     }
 
     /**

@@ -34,17 +34,26 @@ import org.slf4j.LoggerFactory;
 
 
 /**
+ * SLF4J Implementation of Logger. This is just a pass-through to the already
+ * high performance SLF4J implementation.
+ * 
+ * Performance Implementation note: All of the prefix null checks will be
+ * optimized away by a good JIT compiler since the prefix variable is final.
+ * 
  * @author andune
- *
+ * 
  */
 public class LoggerSlf4jImpl implements Logger {
     private final org.slf4j.Logger log;
+    private final String prefix;
 
     protected LoggerSlf4jImpl(org.slf4j.Logger log) {
         this.log = log;
+        prefix = null;
     }
-    protected LoggerSlf4jImpl(String name) {
+    protected LoggerSlf4jImpl(String name, String prefix) {
         this.log = LoggerFactory.getLogger(name);
+        this.prefix = prefix;
     }
     
     @Override
@@ -54,92 +63,146 @@ public class LoggerSlf4jImpl implements Logger {
 
     @Override
     public void info(String msg) {
-        log.info(msg);
+    	if( prefix != null )
+    		log.info(prefix + msg);
+    	else
+    		log.info(msg);
     }
 
     @Override
     public void info(String format, Object obj1) {
-        log.info(format, obj1);
+    	if( prefix != null )
+            log.info(prefix + format, obj1);
+    	else
+            log.info(format, obj1);
     }
 
     @Override
     public void info(String format, Object obj1, Object obj2) {
-        log.info(format, obj1, obj2);
+    	if( prefix != null )
+            log.info(prefix + format, obj1, obj2);
+    	else
+            log.info(format, obj1, obj2);
     }
 
     @Override
     public void info(String format, Object...args) {
-        log.info(format, args);
+    	if( prefix != null )
+            log.info(prefix + format, args);
+    	else
+            log.info(format, args);
     }
 
     @Override
     public void warn(String msg) {
-        log.warn(msg);
+    	if( prefix != null )
+    		log.warn(prefix + msg);
+    	else
+    		log.warn(msg);
     }
 
     @Override
     public void warn(String format, Object obj1) {
-        log.warn(format, obj1);
+    	if( prefix != null )
+            log.warn(prefix + format, obj1);
+    	else
+            log.warn(format, obj1);
     }
 
     @Override
     public void warn(String format, Object obj1, Object obj2) {
-        log.warn(format, obj1, obj2);
+    	if( prefix != null )
+            log.warn(prefix + format, obj1, obj2);
+    	else
+            log.warn(format, obj1, obj2);
     }
 
     @Override
     public void warn(String format, Object...args) {
-        log.warn(format, args);
+    	if( prefix != null )
+            log.warn(prefix + format, args);
+    	else
+            log.warn(format, args);
     }
 
     @Override
     public void warn(String msg, Throwable t) {
-        log.warn(msg, t);
+    	if( prefix != null )
+            log.warn(prefix + msg, t);
+    	else
+            log.warn(msg, t);
     }
 
     @Override
     public void error(String msg) {
-        log.error(msg);
+    	if( prefix != null )
+    		log.error(prefix + msg);
+    	else
+    		log.error(msg);
     }
 
     @Override
     public void error(String format, Object obj1) {
-        log.error(format, obj1);
+    	if( prefix != null )
+            log.error(prefix + format, obj1);
+    	else
+            log.error(format, obj1);
     }
 
     @Override
     public void error(String format, Object obj1, Object obj2) {
-        log.error(format, obj1, obj2);
+    	if( prefix != null )
+            log.error(prefix + format, obj1, obj2);
+    	else
+            log.error(format, obj1, obj2);
     }
 
     @Override
     public void error(String format, Object...args) {
-        log.error(format, args);
+    	if( prefix != null )
+            log.error(prefix + format, args);
+    	else
+            log.error(format, args);
     }
 
     @Override
     public void error(String msg, Throwable t) {
-        log.error(msg, t);
+    	if( prefix != null )
+            log.error(prefix + msg, t);
+    	else
+            log.error(msg, t);
     }
 
     @Override
     public void debug(String msg) {
-        log.debug(msg);
+    	if( prefix != null )
+    		log.debug(prefix + msg);
+    	else
+    		log.debug(msg);
     }
 
     @Override
     public void debug(String format, Object obj1) {
-        log.debug(format, obj1);
+    	if( prefix != null )
+            log.debug(prefix + format, obj1);
+    	else
+            log.debug(format, obj1);
     }
 
     @Override
     public void debug(String format, Object obj1, Object obj2) {
-        log.debug(format, obj1, obj2);
+    	if( prefix != null )
+            log.debug(prefix + format, obj1, obj2);
+    	else
+            log.debug(format, obj1, obj2);
     }
 
     @Override
     public void debug(String format, Object...args) {
-        log.debug(format, args);
+    	if( prefix != null )
+            log.debug(prefix + format, args);
+    	else
+            log.debug(format, args);
     }
 
 }
