@@ -35,8 +35,10 @@ package com.andune.minecraft.commonlib.server.api.event;
  *
  */
 public enum EventPriority {
+    LOWEST,
+    LOW,
     NORMAL,
+    HIGH,
     HIGHEST,
-    MONITOR,
-    CONFIG_DEFINED
+    MONITOR
 }
