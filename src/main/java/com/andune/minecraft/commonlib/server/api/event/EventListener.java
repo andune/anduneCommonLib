@@ -26,22 +26,15 @@
  * GNU General Public License for more details.
  */
 /**
- * 
+ *
  */
 package com.andune.minecraft.commonlib.server.api.event;
 
-import com.andune.minecraft.commonlib.server.api.events.PlayerBedEnterEvent;
-import com.andune.minecraft.commonlib.server.api.events.PlayerBedRightClickEvent;
-import com.andune.minecraft.commonlib.server.api.events.PlayerDamageEvent;
-import com.andune.minecraft.commonlib.server.api.events.PlayerJoinEvent;
-import com.andune.minecraft.commonlib.server.api.events.PlayerKickEvent;
-import com.andune.minecraft.commonlib.server.api.events.PlayerQuitEvent;
-import com.andune.minecraft.commonlib.server.api.events.PlayerRespawnEvent;
-import com.andune.minecraft.commonlib.server.api.events.PlayerTeleportEvent;
+import com.andune.minecraft.commonlib.server.api.events.*;
 
 /** API for HSP to implement in order to receive event callbacks from
  * the server implementation.
- * 
+ *
  * @author andune
  *
  */
@@ -52,7 +45,8 @@ public interface EventListener {
     public void playerQuit(PlayerQuitEvent event);
     public void playerKick(PlayerKickEvent event);
     public void playerDamage(PlayerDamageEvent event);
-    
+    public void playerDeath(PlayerDeathEvent event);
+
     /**
      * Called when a player right-clicks a bed.
      * @param event
@@ -68,7 +62,7 @@ public interface EventListener {
     /**
      * A player Teleport event that is at an observe priority
      * (such as Bukkit MONITOR priority)
-     * 
+     *
      * @param event
      */
     public void observePlayerTeleport(PlayerTeleportEvent event);
@@ -76,7 +70,7 @@ public interface EventListener {
     /**
      * A player Respawn event that is at an observe priority
      * (such as Bukkit MONITOR priority)
-     * 
+     *
      * @param event
      */
     public void observeRespawn(PlayerRespawnEvent event);
