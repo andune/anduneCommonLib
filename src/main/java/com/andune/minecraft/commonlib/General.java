@@ -49,16 +49,19 @@ public class General {
 	private final Map<String, String> timeLongHand = new HashMap<String, String>();
 	private final Map<String, String> timeShortHand = new HashMap<String, String>();
 	private final Locale locale;
+    // track for lazy initialization on first usage
+    private boolean initialized = false;
 
 	@Inject
     private General(Locale locale) {
 	    this.locale = locale;
-        setupTimeLocaleStrings();
     }
 
     /** Given time input, such as of the form "1d" "1w 2d 3h", this will return
      * the number of milliseconds that time format equals. For example, "1d" is
      * 86400 seconds, so this method would return 86400000.
+     *
+     * ** NOT THREAD SAFE **
      * 
      * @param input
      * @return
@@ -66,6 +69,12 @@ public class General {
     public long parseTimeInput(final String input) throws NumberFormatException {
         log.debug("parseTimeInput() input={}", input);
     	long time = 0;
+
+        // we depend on external synchronization to prevent race condition
+        if( !initialized ) {
+            setupTimeLocaleStrings();
+            initialized = true;
+        }
 
     	String[] args = input.split(" ");
     	for(int i=0; i < args.length; i++) {
@@ -105,8 +114,10 @@ public class General {
     /**
      * Given milliseconds as input, this will return a string that represents
      * that time format.
+     *
+     * ** NOT THREAD SAFE **
      * 
-     * @param seconds
+     * @param millis
      * @param useShortHand
      *            set to true to use shorthand notation. shorthand will return
      *            a string of the form "4d3h2m" whereas this set to false would
@@ -122,7 +133,13 @@ public class General {
     public String displayTimeString(final long millis, boolean useShortHand, String mostSignificant) throws NumberFormatException {
     	final StringBuffer sb = new StringBuffer();
     	long seconds = millis / 1000;		// chop down to seconds
-    	
+
+        // we depend on external synchronization to prevent race condition
+        if( !initialized ) {
+            setupTimeLocaleStrings();
+            initialized = true;
+        }
+
         if( seconds >= (86400 * 365) ) {
             long years = seconds / (86400 * 365);
             log.debug("years={}",years);
