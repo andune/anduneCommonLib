@@ -47,7 +47,6 @@ public class ConfigException extends Exception {
 	 * 
 	 */
 	public ConfigException() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -55,7 +54,6 @@ public class ConfigException extends Exception {
 	 */
 	public ConfigException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -63,7 +61,6 @@ public class ConfigException extends Exception {
 	 */
 	public ConfigException(Throwable cause) {
 		super(cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -72,7 +69,6 @@ public class ConfigException extends Exception {
 	 */
 	public ConfigException(String message, Throwable cause) {
 		super(message, cause);
-		// TODO Auto-generated constructor stub
 	}
 
 }
