@@ -106,7 +106,7 @@ public class Colors {
     public String applyColors(String s) {
         // simple optimization: if no % symbol is present at all in the value
         // string, then we can skip color/arg replacement entirely. -morganm
-        if( s.indexOf('%') != -1 )
+        if( s.indexOf('%') == -1 )
         	return s;
         
         for (Entry<String, Pattern> e : regexPatterns.entrySet()) {
