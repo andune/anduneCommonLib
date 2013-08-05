@@ -43,7 +43,7 @@ import org.slf4j.helpers.MessageFormatter;
  *
  */
 public class LoggerJUL implements Logger {
-    static String SELF = LoggerJUL.class.getName();
+    private static final String SELF = LoggerJUL.class.getName();
     private final String prefix;
     
     private final java.util.logging.Logger log;
