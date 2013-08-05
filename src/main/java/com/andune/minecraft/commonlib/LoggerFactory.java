@@ -30,6 +30,10 @@
  */
 package com.andune.minecraft.commonlib;
 
+import com.andune.minecraft.commonlib.log.LogUtil;
+import com.andune.minecraft.commonlib.log.LogUtilJUL;
+import com.andune.minecraft.commonlib.log.LogUtilSlf4j;
+
 /**
  * @author andune
  *
@@ -37,9 +41,25 @@ package com.andune.minecraft.commonlib;
 public class LoggerFactory {
     private static Class<?> loggerImpl = LoggerJUL.class;  // default to JUL
     private static String prefix = null;
+    private static LogUtil logUtil = null;
     
     public static void setLoggerImpl(Class<?> clazz) {
         loggerImpl = clazz;
+        logUtil = null;
+    }
+
+    public static LogUtil getLogUtil() {
+        if( logUtil == null ) {
+            if( LoggerSlf4jImpl.class.equals(loggerImpl) ) {
+                logUtil = new LogUtilSlf4j();
+            }
+            // JUL is default
+            else {
+                logUtil = new LogUtilJUL();
+            }
+        }
+
+        return logUtil;
     }
 
     /**
