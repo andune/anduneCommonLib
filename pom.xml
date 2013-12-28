@@ -6,7 +6,7 @@
   <groupId>com.andune.minecraft.commonlib</groupId>
   <artifactId>commonlib</artifactId>
   <packaging>jar</packaging>
-  <version>0.5</version>
+  <version>0.6-SNAPSHOT</version>
   <name>commonlib</name>
   <description>commonlib is a library of classes for use Andune's MineCraft plugins</description>
 
