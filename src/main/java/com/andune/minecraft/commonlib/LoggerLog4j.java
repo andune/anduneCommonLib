@@ -30,7 +30,7 @@ public class LoggerLog4j implements Logger {
 
     @Override
     public void info(String msg) {
-        if( prefix != null )
+        if (prefix != null)
             log.info(prefix + msg);
         else
             log.info(msg);
@@ -38,7 +38,7 @@ public class LoggerLog4j implements Logger {
 
     @Override
     public void info(String format, Object obj1) {
-        if( prefix != null )
+        if (prefix != null)
             LogSF.info(log, prefix + format, obj1);
         else
             LogSF.info(log, format, obj1);
@@ -46,7 +46,7 @@ public class LoggerLog4j implements Logger {
 
     @Override
     public void info(String format, Object obj1, Object obj2) {
-        if( prefix != null )
+        if (prefix != null)
             LogSF.info(log, prefix + format, obj1, obj2);
         else
             LogSF.info(log, format, obj1, obj2);
@@ -54,7 +54,7 @@ public class LoggerLog4j implements Logger {
 
     @Override
     public void info(String format, Object... args) {
-        if( prefix != null )
+        if (prefix != null)
             LogSF.info(log, prefix + format, args);
         else
             LogSF.info(log, format, args);
@@ -62,7 +62,7 @@ public class LoggerLog4j implements Logger {
 
     @Override
     public void warn(String msg) {
-        if( prefix != null )
+        if (prefix != null)
             log.warn(prefix + msg);
         else
             log.warn(msg);
@@ -70,7 +70,7 @@ public class LoggerLog4j implements Logger {
 
     @Override
     public void warn(String format, Object obj1) {
-        if( prefix != null )
+        if (prefix != null)
             LogSF.warn(log, prefix + format, obj1);
         else
             LogSF.warn(log, format, obj1);
@@ -78,7 +78,7 @@ public class LoggerLog4j implements Logger {
 
     @Override
     public void warn(String format, Object obj1, Object obj2) {
-        if( prefix != null )
+        if (prefix != null)
             LogSF.warn(log, prefix + format, obj1, obj2);
         else
             LogSF.warn(log, format, obj1, obj2);
@@ -86,7 +86,7 @@ public class LoggerLog4j implements Logger {
 
     @Override
     public void warn(String format, Object... args) {
-        if( prefix != null )
+        if (prefix != null)
             LogSF.warn(log, prefix + format, args);
         else
             LogSF.warn(log, format, args);
@@ -94,7 +94,7 @@ public class LoggerLog4j implements Logger {
 
     @Override
     public void warn(String msg, Throwable t) {
-        if( prefix != null )
+        if (prefix != null)
             log.warn(prefix + msg, t);
         else
             log.warn(msg, t);
@@ -102,40 +102,40 @@ public class LoggerLog4j implements Logger {
 
     @Override
     public void error(String msg) {
-        if( prefix != null )
+        if (prefix != null)
             log.error(prefix + msg);
         else
             log.error(msg);
     }
 
     /**
-     * LogSF doesn't provide efficient single and double argument versions
-     * for error, but in practice this shouldn't matter at all since errors
-     * aren't being called often enough to have any significant performance
-     * impact anyway.
+     * LogSF doesn't provide efficient single and double argument versions for
+     * error, but in practice this shouldn't matter at all since errors aren't
+     * being called often enough to have any significant performance impact
+     * anyway.
      *
      * @param format
      * @param obj1
      */
     @Override
     public void error(String format, Object obj1) {
-        if( prefix != null )
-            LogSF.error(log, prefix + format, new Object[] { obj1 });
+        if (prefix != null)
+            LogSF.error(log, prefix + format, new Object[]{obj1});
         else
-            LogSF.error(log, format, new Object[] { obj1 });
+            LogSF.error(log, format, new Object[]{obj1});
     }
 
     @Override
     public void error(String format, Object obj1, Object obj2) {
-        if( prefix != null )
-            LogSF.error(log, prefix + format, new Object[] { obj1, obj2 });
+        if (prefix != null)
+            LogSF.error(log, prefix + format, new Object[]{obj1, obj2});
         else
-            LogSF.error(log, format, new Object[] { obj1, obj2 });
+            LogSF.error(log, format, new Object[]{obj1, obj2});
     }
 
     @Override
     public void error(String format, Object... args) {
-        if( prefix != null )
+        if (prefix != null)
             LogSF.error(log, prefix + format, args);
         else
             LogSF.error(log, format, args);
@@ -143,7 +143,7 @@ public class LoggerLog4j implements Logger {
 
     @Override
     public void error(String msg, Throwable t) {
-        if( prefix != null )
+        if (prefix != null)
             log.error(prefix + msg, t);
         else
             log.error(msg, t);
@@ -151,7 +151,7 @@ public class LoggerLog4j implements Logger {
 
     @Override
     public void debug(String msg) {
-        if( prefix != null )
+        if (prefix != null)
             log.debug(prefix + msg);
         else
             log.debug(msg);
@@ -159,7 +159,7 @@ public class LoggerLog4j implements Logger {
 
     @Override
     public void debug(String format, Object obj1) {
-        if( prefix != null )
+        if (prefix != null)
             LogSF.debug(log, prefix + format, obj1);
         else
             LogSF.debug(log, format, obj1);
@@ -167,7 +167,7 @@ public class LoggerLog4j implements Logger {
 
     @Override
     public void debug(String format, Object obj1, Object obj2) {
-        if( prefix != null )
+        if (prefix != null)
             LogSF.debug(log, prefix + format, obj1, obj2);
         else
             LogSF.debug(log, format, obj1, obj2);
@@ -176,7 +176,7 @@ public class LoggerLog4j implements Logger {
 
     @Override
     public void debug(String format, Object... args) {
-        if( prefix != null )
+        if (prefix != null)
             LogSF.debug(log, prefix + format, args);
         else
             LogSF.debug(log, format, args);
