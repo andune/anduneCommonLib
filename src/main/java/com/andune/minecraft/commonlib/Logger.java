@@ -26,43 +26,55 @@
  * GNU General Public License for more details.
  */
 /**
- * 
+ *
  */
 package com.andune.minecraft.commonlib;
 
 
 /**
- * Modeled after slf4j methods, this is a simplified interface. This allows
- * us to map directly to slf4j those who want speed or want to use one of
- * slf4j's other logging backends, but while maintaining an extremely thin
- * footprint for plugins using this logging interface.
- * 
+ * Modeled after slf4j methods, this is a simplified interface. This allows us
+ * to map directly to slf4j those who want speed or want to use one of slf4j's
+ * other logging backends, but while maintaining an extremely thin footprint for
+ * plugins using this logging interface.
+ *
  * @author morganm
  */
 public interface Logger {
-    public abstract boolean isDebugEnabled();
-    
-    public abstract void info(String msg);
-    public abstract void info(String format, Object obj1);
-    public abstract void info(String format, Object obj1, Object obj2);
-    public abstract void info(String format, Object...args);
-    
-    public abstract void warn(String msg);
-    public abstract void warn(String format, Object obj1);
-    public abstract void warn(String format, Object obj1, Object obj2);
-    public abstract void warn(String format, Object...args);
-    
-    public abstract void warn(String msg, Throwable t);
-	
-    public abstract void error(String msg);
-    public abstract void error(String format, Object obj1);
-    public abstract void error(String format, Object obj1, Object obj2);
-    public abstract void error(String format, Object...args);
-    
-    public abstract void error(String msg, Throwable t);
-    
-    public abstract void debug(String msg);
-    public abstract void debug(String format, Object obj1);
-    public abstract void debug(String format, Object obj1, Object obj2);
-    public abstract void debug(String format, Object...args);
+    abstract boolean isDebugEnabled();
+
+    abstract void info(String msg);
+
+    abstract void info(String format, Object obj1);
+
+    abstract void info(String format, Object obj1, Object obj2);
+
+    abstract void info(String format, Object... args);
+
+    abstract void warn(String msg);
+
+    abstract void warn(String format, Object obj1);
+
+    abstract void warn(String format, Object obj1, Object obj2);
+
+    abstract void warn(String format, Object... args);
+
+    abstract void warn(String msg, Throwable t);
+
+    abstract void error(String msg);
+
+    abstract void error(String format, Object obj1);
+
+    abstract void error(String format, Object obj1, Object obj2);
+
+    abstract void error(String format, Object... args);
+
+    abstract void error(String msg, Throwable t);
+
+    abstract void debug(String msg);
+
+    abstract void debug(String format, Object obj1);
+
+    abstract void debug(String format, Object obj1, Object obj2);
+
+    abstract void debug(String format, Object... args);
 }
