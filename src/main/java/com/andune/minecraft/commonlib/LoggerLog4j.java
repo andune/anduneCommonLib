@@ -1,7 +1,33 @@
+/**
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright (c) 2013 Andune (andune.alleria@gmail.com)
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
 package com.andune.minecraft.commonlib;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.LogSF;
+import org.apache.logging.log4j.LogManager;
 
 /**
  * Performance Implementation note: All of the prefix null checks will be
@@ -10,10 +36,10 @@ import org.apache.log4j.LogSF;
  * @author andune
  */
 public class LoggerLog4j implements Logger {
-    private final org.apache.log4j.Logger log;
+    private final org.apache.logging.log4j.Logger log;
     private final String prefix;
 
-    public LoggerLog4j(org.apache.log4j.Logger log) {
+    public LoggerLog4j(org.apache.logging.log4j.Logger log) {
         this.log = log;
         prefix = null;
     }
@@ -39,25 +65,25 @@ public class LoggerLog4j implements Logger {
     @Override
     public void info(String format, Object obj1) {
         if (prefix != null)
-            LogSF.info(log, prefix + format, obj1);
+            log.info(prefix + format, obj1);
         else
-            LogSF.info(log, format, obj1);
+            log.info(format, obj1);
     }
 
     @Override
     public void info(String format, Object obj1, Object obj2) {
         if (prefix != null)
-            LogSF.info(log, prefix + format, obj1, obj2);
+            log.info(prefix + format, obj1, obj2);
         else
-            LogSF.info(log, format, obj1, obj2);
+            log.info(format, obj1, obj2);
     }
 
     @Override
     public void info(String format, Object... args) {
         if (prefix != null)
-            LogSF.info(log, prefix + format, args);
+            log.info(prefix + format, args);
         else
-            LogSF.info(log, format, args);
+            log.info(format, args);
     }
 
     @Override
@@ -71,25 +97,25 @@ public class LoggerLog4j implements Logger {
     @Override
     public void warn(String format, Object obj1) {
         if (prefix != null)
-            LogSF.warn(log, prefix + format, obj1);
+            log.warn(prefix + format, obj1);
         else
-            LogSF.warn(log, format, obj1);
+            log.warn(format, obj1);
     }
 
     @Override
     public void warn(String format, Object obj1, Object obj2) {
         if (prefix != null)
-            LogSF.warn(log, prefix + format, obj1, obj2);
+            log.warn(prefix + format, obj1, obj2);
         else
-            LogSF.warn(log, format, obj1, obj2);
+            log.warn(format, obj1, obj2);
     }
 
     @Override
     public void warn(String format, Object... args) {
         if (prefix != null)
-            LogSF.warn(log, prefix + format, args);
+            log.warn(prefix + format, args);
         else
-            LogSF.warn(log, format, args);
+            log.warn(format, args);
     }
 
     @Override
@@ -108,37 +134,28 @@ public class LoggerLog4j implements Logger {
             log.error(msg);
     }
 
-    /**
-     * LogSF doesn't provide efficient single and double argument versions for
-     * error, but in practice this shouldn't matter at all since errors aren't
-     * being called often enough to have any significant performance impact
-     * anyway.
-     *
-     * @param format
-     * @param obj1
-     */
     @Override
     public void error(String format, Object obj1) {
         if (prefix != null)
-            LogSF.error(log, prefix + format, new Object[]{obj1});
+            log.error(prefix + format, obj1);
         else
-            LogSF.error(log, format, new Object[]{obj1});
+            log.error(format, obj1);
     }
 
     @Override
     public void error(String format, Object obj1, Object obj2) {
         if (prefix != null)
-            LogSF.error(log, prefix + format, new Object[]{obj1, obj2});
+            log.error(prefix + format, obj1, obj2);
         else
-            LogSF.error(log, format, new Object[]{obj1, obj2});
+            log.error(format, obj1, obj2);
     }
 
     @Override
     public void error(String format, Object... args) {
         if (prefix != null)
-            LogSF.error(log, prefix + format, args);
+            log.error(prefix + format, args);
         else
-            LogSF.error(log, format, args);
+            log.error(format, args);
     }
 
     @Override
@@ -160,25 +177,25 @@ public class LoggerLog4j implements Logger {
     @Override
     public void debug(String format, Object obj1) {
         if (prefix != null)
-            LogSF.debug(log, prefix + format, obj1);
+            log.debug(prefix + format, obj1);
         else
-            LogSF.debug(log, format, obj1);
+            log.debug(format, obj1);
     }
 
     @Override
     public void debug(String format, Object obj1, Object obj2) {
         if (prefix != null)
-            LogSF.debug(log, prefix + format, obj1, obj2);
+            log.debug(prefix + format, obj1, obj2);
         else
-            LogSF.debug(log, format, obj1, obj2);
+            log.debug(format, obj1, obj2);
 
     }
 
     @Override
     public void debug(String format, Object... args) {
         if (prefix != null)
-            LogSF.debug(log, prefix + format, args);
+            log.debug(prefix + format, args);
         else
-            LogSF.debug(log, format, args);
+            log.debug(format, args);
     }
 }

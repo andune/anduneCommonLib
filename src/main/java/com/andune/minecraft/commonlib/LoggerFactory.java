@@ -32,6 +32,7 @@ package com.andune.minecraft.commonlib;
 
 import com.andune.minecraft.commonlib.log.LogUtil;
 import com.andune.minecraft.commonlib.log.LogUtilJUL;
+import com.andune.minecraft.commonlib.log.LogUtilLog4j;
 import com.andune.minecraft.commonlib.log.LogUtilSlf4j;
 
 /**
@@ -39,7 +40,8 @@ import com.andune.minecraft.commonlib.log.LogUtilSlf4j;
  *
  */
 public class LoggerFactory {
-    private static Class<?> loggerImpl = LoggerJUL.class;  // default to JUL
+    // default to JUL
+    private static Class<?> loggerImpl = LoggerJUL.class;
     private static String prefix = null;
     private static LogUtil logUtil = null;
     
@@ -52,6 +54,9 @@ public class LoggerFactory {
         if( logUtil == null ) {
             if( LoggerSlf4jImpl.class.equals(loggerImpl) ) {
                 logUtil = new LogUtilSlf4j();
+            }
+            else if (LoggerLog4j.class.equals(loggerImpl) ) {
+                logUtil = new LogUtilLog4j();
             }
             // JUL is default
             else {
@@ -79,6 +84,9 @@ public class LoggerFactory {
     public static Logger getLogger(String name) {
         if( LoggerSlf4jImpl.class.equals(loggerImpl) ) {
             return new LoggerSlf4jImpl(name, prefix);
+        }
+        else if (LoggerLog4j.class.equals(loggerImpl) ) {
+            return new LoggerLog4j(name, prefix);
         }
         // JUL is default, we use it if nothing else we know is specified
         else {

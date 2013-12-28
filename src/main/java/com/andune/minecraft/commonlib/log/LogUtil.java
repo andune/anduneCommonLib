@@ -37,9 +37,14 @@ package com.andune.minecraft.commonlib.log;
 public interface LogUtil {
     /**
      * Enable debugging, using the given baseLogName.
-     * @param baseLogName the base log name to enable debubbing, ie. "com.andune.someplugin"
+     *
+     * @param baseLogName the base log name to enable debubbing, ie.
+     *                    "com.andune.someplugin"
+     * @param debugFile   (optional) the file name to send debug output to. If
+     *                    this argument is null, output will go to the default
+     *                    logger, usually the console.
      */
-    void enableDebug(String baseLogName);
+    void enableDebug(String baseLogName, String debugFile);
 
     /**
      * Disable debugging at the previously assigned baseLogName.
