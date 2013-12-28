@@ -36,7 +36,7 @@ public class LogUtilSlf4j implements LogUtil {
     private final com.andune.minecraft.commonlib.Logger log = LoggerFactory.getLogger(LogUtil.class);
 
     @Override
-    public void enableDebug(final String baseLogger) {
+    public void enableDebug(final String baseLogger, String debugFile) {
         log.warn("enableDebug called for Slf4j logger, but method not implemented. No debug messages will be logged.");
     }
 

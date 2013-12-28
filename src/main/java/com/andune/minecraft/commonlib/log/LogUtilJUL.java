@@ -44,13 +44,12 @@ public class LogUtilJUL implements LogUtil {
     private String baseLogger;
 
     @Override
-    public void enableDebug(final String baseLogger) {
+    public void enableDebug(final String baseLogger, String debugFile) {
         if (!debugEnabled) {
             debugEnabled = true;
             this.baseLogger = baseLogger;
 
             previousLevel = Logger.getLogger(baseLogger).getLevel();
-//            Logger.getLogger("com.andune.minecraft.hsp").setLevel(Level.ALL);
             Logger.getLogger(baseLogger).setLevel(Level.ALL);
 
             Handler handler = getRootFileHandler(Logger.getLogger("Minecraft"));
@@ -69,7 +68,6 @@ public class LogUtilJUL implements LogUtil {
             com.andune.minecraft.commonlib.Logger pluginLogger = LoggerFactory.getLogger(baseLogger);
             pluginLogger.debug("DEBUG DISABLED");
 
-//            Logger.getLogger("com.andune.minecraft.hsp").setLevel(previousLevel);
             Logger.getLogger(baseLogger).setLevel(previousLevel);
             previousLevel = null;
 
