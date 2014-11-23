@@ -50,7 +50,14 @@ public interface Player extends CommandSender, OfflinePlayer {
      * @return the players name
      */
     public String getName();
-    
+
+    /**
+     * Return the UUID of this player
+     *
+     * @return the players UUID
+     */
+    public java.util.UUID getUUID();
+
     /**
      * Return the current Location of this player object
      * 
