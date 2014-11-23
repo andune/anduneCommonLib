@@ -41,7 +41,14 @@ public interface OfflinePlayer {
      * @return Player name
      */
     public String getName();
-    
+
+    /**
+     * Return the UUID of this player
+     *
+     * @return the players UUID
+     */
+    public java.util.UUID getUUID();
+
     /**
      * True if this player is online, false if offline.
      * 
