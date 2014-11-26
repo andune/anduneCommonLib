@@ -47,6 +47,20 @@ public interface ConfigurationSection {
     public Set<String> getKeys();
 
     /**
+     * Gets a set containing all keys in this section.
+     *
+     * If deep is set to true, then this will contain all the keys within any
+     * child {@link ConfigurationSection}s (and their children, etc). These
+     * will be in a valid path notation for you to use.
+     * <p>
+     * If deep is set to false, then this will contain only the keys of any
+     * direct children, and not their own children.
+     *
+     * @return Set of keys contained within this ConfigurationSection.
+     */
+    public Set<String> getKeys(boolean deep);
+
+    /**
      * Gets a set containing all keys in the specified path.
      * 
      * @return Set of keys contained within the specified path
