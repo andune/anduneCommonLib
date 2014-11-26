@@ -33,8 +33,11 @@ package com.andune.minecraft.commonlib.server.api;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Set;
 
 import com.andune.minecraft.commonlib.server.api.config.ConfigException;
+import sun.security.krb5.Config;
 
 /**
  * Interface to YAML configuration. HSP config files are written in YAML,
@@ -48,6 +51,11 @@ public interface YamlFile {
     void save(File file) throws IOException;
 
     void load(File file) throws FileNotFoundException, IOException, ConfigException;
+
+    /**
+     * Load the configuration from a String
+     */
+    void loadFromString(String input) throws ConfigException;
 
     /**
      * Gets the requested ConfigurationSection by path.
@@ -76,6 +84,7 @@ public interface YamlFile {
      * Add default values to this YamlFile.
      *
      * @param defaults
+     * @return keys of any defaults that were missing and were applied
      */
-    void addDefaultConfig(ConfigurationSection defaults);
+    Set<String> addDefaultConfig(ConfigurationSection defaults);
 }

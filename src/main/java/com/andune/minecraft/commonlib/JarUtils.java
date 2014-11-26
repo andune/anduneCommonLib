@@ -30,11 +30,7 @@
  */
 package com.andune.minecraft.commonlib;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.jar.Attributes;
@@ -73,7 +69,7 @@ public class JarUtils {
                 JarEntry entry = jar.getJarEntry(fileName);
                 if( entry == null )
                     throw new FileNotFoundException("Couldn't locate file "+fileName+" in jar file "+jar.getName());
-                
+
                 InputStream is = jar.getInputStream(entry);
                 FileOutputStream os = new FileOutputStream(outfile);
                 byte[] buf = new byte[(int) entry.getSize()];
@@ -84,6 +80,33 @@ public class JarUtils {
 //                log.warning("Could not copy config file "+fileName+" to default location");
 //            }
         }
+    }
+
+    /**
+     * Return a file from the JAR as a string.
+     *
+     * @param fileName the file to read
+     * @return the contents of the file
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public String readFileFromJar(String fileName) throws FileNotFoundException, IOException {
+        JarFile jar = new JarFile(jarFile);
+
+        JarEntry entry = jar.getJarEntry(fileName);
+        if( entry == null )
+            throw new FileNotFoundException("Couldn't locate file "+fileName+" in jar file "+jar.getName());
+
+        InputStream is = jar.getInputStream(entry);
+        Reader reader = new InputStreamReader(is);
+        StringWriter writer = new StringWriter((int) entry.getSize());
+        char[] buf = new char[(int) entry.getSize()];
+        reader.read(buf, 0, (int) entry.getSize());
+        writer.write(buf);
+        is.close();
+        writer.close();
+
+        return writer.toString();
     }
     
     /**
