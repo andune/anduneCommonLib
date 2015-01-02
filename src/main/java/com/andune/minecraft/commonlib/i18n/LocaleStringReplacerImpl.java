@@ -98,6 +98,11 @@ public class LocaleStringReplacerImpl implements Locale {
 	        	
 	            Object object = bind.get(bindKey);
 	            String bindVal = (object != null ? object.toString() : "null");
+
+                // it is possible that ".toString()" could return null, we need to protect
+                // the regex from that scenario as well
+                if (bindVal == null)
+                    bindVal = "null";
 	
 	            value = value.replaceAll("%" + bindKey + "%", bindVal);
 	        }
