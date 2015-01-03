@@ -62,6 +62,7 @@ public class Initializer {
     public Initializer(Reflections reflections, Injector injector) {
         this.reflections = reflections;
         this.injector = injector;
+        log.debug("Initializer constructor. injector = {}", injector.hashCode());
     }
 
     /**
@@ -72,7 +73,8 @@ public class Initializer {
      */
     public void initAll() throws Exception {
         long startupBegin = System.currentTimeMillis();
-        
+        log.debug("Initializer initAll. injector = {}", injector.hashCode());
+
         for(Initializable init : getSortedInitObjects()) {
             log.debug("[Startup Timer] starting {} (t+{})", init, System.currentTimeMillis()-startupBegin);
             long startupTimer = System.currentTimeMillis();
@@ -108,8 +110,8 @@ public class Initializer {
         // sort into a TreeMap which will maintain order. Items of same priority
         // are added to a List keyed by that priority
         for(Class<? extends Initializable> initClass : getInitClasses()) {
-            log.debug("Initializer: getting class intance for {}", initClass);
             Initializable init = injector.getInstance(initClass);
+            log.debug("Initializer: injector returned instance for class {} [{}]", initClass, init);
             int priority = init.getInitPriority();
             if( priority < 0 )
                 priority = 0;
