@@ -100,11 +100,21 @@ public class General {
     		else if( (index = args[i].indexOf(timeShortHand.get("m"))) != -1 ) {		// minutes
     			multiplier *= 60;
     		}
-    		
+
+			// we got some time format other than what was expected. So print
+			// an error and just assume unit of time is seconds
+			if (index == -1) {
+				log.warn("parseTimeInput given input of {} that doesn't match any known time unit", args[i]);
+				index = args[i].length()-1;
+			}
 			String value = args[i].substring(0, index);
 			log.debug("parseTimeInput: value={}, multiplier={}", value, multiplier);
-			int v = Integer.valueOf(value);
-			time += v * multiplier;
+			try {
+				int v = Integer.valueOf(value);
+				time += v * multiplier;
+			} catch(NumberFormatException e) {
+				log.warn("parseTimeInput Caught NumberFormatException for arg {}: {}", args[i], e.getMessage());
+			}
     	}
     	
 		log.debug("parseTimeInput: return time={}",time);
