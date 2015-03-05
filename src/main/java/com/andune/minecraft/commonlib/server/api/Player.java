@@ -102,4 +102,11 @@ public interface Player extends CommandSender, OfflinePlayer {
      * @return true if player is in sneak mode
      */
     public boolean isSneaking();
+
+    /**
+     * Sets this player's velocity
+     *
+     * @param velocity the new Velocity
+     */
+    public void setVelocity(Vector velocity);
 }

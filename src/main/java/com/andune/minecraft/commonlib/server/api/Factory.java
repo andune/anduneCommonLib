@@ -66,4 +66,16 @@ public interface Factory {
      * @return the new YamlFile object
      */
     public YamlFile newYamlFile();
+
+
+    /**
+     * Create and return a new vector object.
+     *
+     * @param x x velocity
+     * @param y y velocity
+     * @param z z velocity
+     *
+     * @return the new Vector object
+     */
+    public Vector newVector(int x, int y, int z);
 }
