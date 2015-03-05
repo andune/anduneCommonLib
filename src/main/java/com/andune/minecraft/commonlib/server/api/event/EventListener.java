@@ -74,4 +74,12 @@ public interface EventListener {
      * @param event
      */
     public void observeRespawn(PlayerRespawnEvent event);
+
+    /**
+     * Called when a player is detected falling through the world. If the
+     * event is cancelled, the player will not receive damage from the event.
+     *
+     * @param event
+     */
+    public void playerFallThroughWorld(PlayerFallThroughWorldEvent event);
 }
