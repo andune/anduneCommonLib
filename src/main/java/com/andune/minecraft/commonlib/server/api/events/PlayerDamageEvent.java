@@ -36,5 +36,5 @@ package com.andune.minecraft.commonlib.server.api.events;
  *
  */
 public interface PlayerDamageEvent extends PlayerEvent {
-
+    public void setCancelled(boolean canceled);
 }
