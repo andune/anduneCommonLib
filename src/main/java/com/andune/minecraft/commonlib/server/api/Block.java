@@ -49,14 +49,14 @@ public interface Block {
      * 
      * @return the World this block is located within
      */
-    public World getWorld();
+    World getWorld();
 
     /**
-     * Gets the type-id of this block
+     * Gets the BlockType of this block
      *
      * @return block type-id
      */
-    int getTypeId();
+    BlockType getType();
 
     /**
      * Gets the block at the given face
